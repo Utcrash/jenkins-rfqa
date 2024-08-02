@@ -3,12 +3,13 @@ import open from 'open';
 import {changeStatus} from './changeStatus.js';
 import {creds} from './credentials.js' 
 
+const release = process.env.CURR_RELEASE || 'main';
 
 const options = {
   "method": "GET",
-  "hostname": "cicd.ds.datanimbus.com",
+  "hostname": "cicd.datanimbus.io",
   "port": null,
-  "path": "/job/Cloud_Ops/job/PROXY/job/version%252F2.8.1/lastBuild/api/json/",
+  "path": "/job/DNIO/job/PROXY/job/"+release+"/lastBuild/api/json/",
   "headers": {
     "Accept": "*/*",
     "Authorization": "Basic "+creds.jenkinksToken
