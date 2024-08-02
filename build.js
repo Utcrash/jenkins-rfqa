@@ -1,5 +1,6 @@
 import axios from 'axios';
 import inquirer from 'inquirer';
+import open from 'open';
 import { creds } from './credentials.js'
 
 async function main() {
@@ -48,7 +49,6 @@ async function main() {
         { name: 'buildSwaggerUI', value: 'buildSwaggerUI', checked: false }
         ])
     }
-    console.log(paramChoices);
     const { tagName, options } = await inquirer.prompt([
         {
             type: 'input',
@@ -91,16 +91,14 @@ async function main() {
     };
 
     // Send the POST request to trigger the build
-    console.log(jenkinsUrl);
-    try {
-        const response = await axios.post(jenkinsUrl, null, {
-            params: params,
-            headers: headers
-        });
-        console.log('Build triggered successfully.');
-    } catch (error) {
-        console.error('Error triggering build:', error.message);
-    }
+    await axios.post(jenkinsUrl, null, {
+        params: params,
+        headers: headers
+    });
+    const url = `https://cicd.datanimbus.io/cicd/job/DNIO/job/${module}/job/${version}`; // Replace with your desired URL
+
+    await open(url);
 }
+
 
 main();
